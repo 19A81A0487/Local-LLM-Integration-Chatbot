@@ -1,158 +1,93 @@
-# 🍳 Local LLM Recipe Chatbot (FastAPI + Python)
+# 🍳 Local LLM Recipe Chatbot
 
-A simple chatbot that suggests recipes based on ingredients entered by the user. This project uses FastAPI to expose a local API, and a Python CLI or Swagger UI to interact with the chatbot.
-
----
-
-## 📁 Project Structure
-
-
-LocalLLMChatbot/
-│
-├── app.py # FastAPI server with recipe logic
-├── client.py # Command-line chatbot to test API
-├── recipes.json # Dataset of ingredients and recipes
-├── README.md # Documentation file
-└── requirements.txt # Python dependencies (optional)
-
-
+This project implements a **local AI-powered chatbot** that recommends recipes based on user-input ingredients. It uses **FastAPI** to expose an API and a simple Python interface to communicate with the model.
 
 ---
 
-## ✅ Features
+## 📌 Objective
 
-- 🧠 Suggests recipes based on user-provided ingredients.
-- 🚀 FastAPI backend with a `/get-recipe/` endpoint.
-- 🌐 Swagger UI for API testing.
-- 🖥️ Simple CLI chatbot using Python.
-- 🔧 Easily extendable to LLMs like TinyLlama or GPT2 for richer conversations.
-
----
-
-## 🧑‍💻 Prerequisites
-
-Ensure you have Python 3.8+ installed.
+- Set up a lightweight language model (LLM) or rule-based system locally.
+- Train or fine-tune it using custom recipe data.
+- Build an API to interact with the model.
+- Create a simple chatbot interface to return recipe recommendations.
 
 ---
 
-## 🔧 Step 1: Setup & Install Dependencies
+## 🧱 Project Structure
 
+- **app.py** – FastAPI server exposing the `/get-recipe/` API.
+- **recipes.json** – Dataset containing ingredients and recipes.
+- **client.py** – Simple command-line chatbot to query the API.
+- **README.md** – Documentation and usage guide.
 
+---
 
-# Install required packages
-pip install fastapi uvicorn requests torch transformers
+## ⚙️ Key Features
 
+- Suggests recipes based on entered ingredients.
+- Works offline using local dataset or model.
+- Easy-to-use API endpoint via FastAPI.
+- CLI-based chatbot interface for real-time interaction.
+- Easily extendable to use a fine-tuned LLM.
 
+---
 
+## 🔧 Setup Instructions
 
+1. **Install Dependencies**
+   - Use pip to install required packages like FastAPI, Uvicorn, Requests, Transformers, and Torch.
+   - A virtual environment is recommended.
 
-📦 Step 2: Prepare Dataset
-Create a file named recipes.json with the following sample data:
+2. **Prepare Dataset**
+   - Create a JSON file with a list of common ingredients and corresponding recipes.
 
+3. **Start the Server**
+   - Launch the FastAPI app and keep the server running to serve API requests.
 
-[
-  {
-    "ingredients": ["egg", "onion"],
-    "recipe": "Scrambled eggs with sautéed onions."
-  },
-  {
-    "ingredients": ["tomato", "pasta"],
-    "recipe": "Tomato pasta with garlic and herbs."
-  }
-]
+4. **Access the API**
+   - Use the Swagger UI at `http://127.0.0.1:8000/docs` to test the API.
+   - The API accepts a list of ingredients and returns a suggested recipe.
 
+5. **Chatbot Interface**
+   - Use a simple Python script that collects user input, sends it to the API, and displays the response.
 
+---
 
+## 🧠 Model Fine-Tuning (Optional)
 
-🚀 Step 3: Start the FastAPI Server
-Create a file app.py with the API code:
+- You can fine-tune a small model (like GPT-2 or TinyLlama) using recipe-specific prompt-response format data.
+- Hugging Face Transformers library can be used for training.
+- Save and load the model locally for inference through the API.
 
+---
 
-from fastapi import FastAPI
-from pydantic import BaseModel
-import json
+## 🚀 Future Enhancements
 
-app = FastAPI()
+- Add a web-based UI using Streamlit or HTML/CSS.
+- Integrate LLM for more conversational responses.
+- Add support for fuzzy ingredient matching using NLP embeddings.
+- Convert to a Dockerized microservice for deployment.
 
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to the Recipe Chatbot API!"}
+---
 
-# Load recipe data
-with open("recipes.json", "r") as f:
-    recipe_data = json.load(f)
+## 📚 API Overview
 
-class IngredientsInput(BaseModel):
-    ingredients: list[str]
+- **POST `/get-recipe/`**
+  - Accepts: JSON with a list of ingredients
+  - Returns: A matching recipe as a text response
 
-def find_recipe(user_ingredients):
-    for item in recipe_data:
-        if all(ing.lower() in item['ingredients'] for ing in user_ingredients):
-            return item['recipe']
-    return "Sorry, no matching recipe found for those ingredients."
+---
 
-@app.post("/get-recipe/")
-async def get_recipe(data: IngredientsInput):
-    recipe = find_recipe(data.ingredients)
-    return {"ingredients": data.ingredients, "recipe": recipe}
+## 📄 License
 
+Open-source. Free to use for educational and personal projects.
 
+---
 
-Start the server:
+## 👤 Author
 
-uvicorn app:app --reload
+**Venky Madasu**  
+AI/ML Engineer | Data Scientist  
+📧 venkannamadasu87@gmail.com
 
-
-
-Go to http://127.0.0.1:8000/docs to test it interactively via Swagger UI.
-
-
-
-
-🤖 Step 4: Test with CLI Chatbot
-Create client.py to interact with your API:
-
-
-
-import requests
-
-while True:
-    user_input = input("Enter ingredients (comma separated): ")
-    ingredients = [i.strip().lower() for i in user_input.split(',')]
-    
-    response = requests.post("http://127.0.0.1:8000/get-recipe/", json={"ingredients": ingredients})
-    
-    if response.status_code == 200:
-        print("🍽️  Recipe:", response.json()["recipe"])
-    else:
-        print("❌ Error:", response.status_code, response.text)
-
-
-Run the script:
-
-python client.py
-
-
-Example input:
-
-Enter ingredients (comma separated): egg, onion
-
-
-📬 API Reference
-POST /get-recipe/
-
-Body: JSON object with ingredients list.
-
-Returns: Recipe string based on matched ingredients.
-
-
-
-🧠 Optional: Future Enhancements
-🔁 Fine-tune GPT2 or TinyLlama on recipe text.
-
-🌐 Add a web UI using Streamlit or HTML + JS.
-
-🧠 Use sentence embeddings for better ingredient matching.
-
-📦 Dockerize the application.
-
+---
