@@ -1,0 +1,10 @@
+[
+  {
+    "ingredients": ["egg", "onion"],
+    "recipe": "Scrambled eggs with sautéed onions."
+  },
+  {
+    "ingredients": ["tomato", "pasta"],
+    "recipe": "Tomato pasta with garlic and herbs."
+  }
+]
