@@ -102,6 +102,17 @@ Open-source. Free to use for educational and personal projects.
 
 
 
+# First, install all required packages
+pip install fastapi uvicorn requests torch transformers
+
+# Second, start the FastAPI server
+uvicorn app:app --reload
+
+# In a new terminal, run the chatbot client
+python client.py
+
+
+
 
 
 
