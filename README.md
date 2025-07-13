@@ -84,6 +84,27 @@ Open-source. Free to use for educational and personal projects.
 
 ---
 
+
+
+## 📥 Example Input
+
+```json
+{
+  "ingredients": ["egg", "onion"]
+}
+
+📤 Example Output
+
+{
+  "ingredients": ["egg", "onion"],
+  "recipe": "Scrambled eggs with sautéed onions."
+}
+
+
+
+
+
+
 ## 👤 Author
 
 **Venky Madasu**  
